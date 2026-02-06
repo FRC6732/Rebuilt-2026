@@ -6,13 +6,29 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import swervelib.SwerveInputStream;
 
 public class RobotContainer {
+  final CommandXboxController driverController = new CommandXboxController(0);
+  private final SwerveSubsystem drivebase = new SwerveSubsystem();
+
+  SwerveInputStream driveAngularVelocity = SwerveInputStream.of(drivebase.getSwerveDrive(),
+      () -> driverController.getLeftY() * -1,
+      () -> driverController.getLeftX() * -1)
+      .withControllerRotationAxis(driverController::getRightX)
+      .deadband(0.3)
+      .scaleTranslation(0.8)
+      .allianceRelativeControl(true);
+
   public RobotContainer() {
     configureBindings();
   }
 
-  private void configureBindings() {}
+  private void configureBindings() {
+    Command driveFieldOrientedAnglularVelocity = drivebase.driveFieldOriented(driveAngularVelocity);
+    drivebase.setDefaultCommand(driveFieldOrientedAnglularVelocity);
+  }
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
