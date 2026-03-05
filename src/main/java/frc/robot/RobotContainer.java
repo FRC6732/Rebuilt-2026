@@ -29,7 +29,8 @@ public class RobotContainer {
     m_drivebase.setDefaultCommand(m_drivebase.driveCommand(
       () -> m_driverController.getLeftY() * -1,
       () -> m_driverController.getLeftX() * -1,
-      () -> m_driverController.getRightX() * -1
+      () -> m_driverController.getRightX() * -1,
+      true
     ));
 
     m_driverController.a().toggleOnTrue(m_intake.Intake());
@@ -37,12 +38,6 @@ public class RobotContainer {
     m_driverController.y().toggleOnTrue(m_cannon.Fire());
     m_driverController.rightTrigger().whileTrue(m_plow.PlowUp());
     m_driverController.leftTrigger().whileTrue(m_plow.PlowDown());
-
-    // drivebase.setDefaultCommand(drivebase.driveCommand(
-    // () -> MathUtil.applyDeadband(driverController.getLeftY(), 0.2),
-    // () -> MathUtil.applyDeadband(driverController.getLeftX(), 0.2),
-    // () -> driverController.getRightX(),
-    // () -> driverController.getRightY());
   }
 
   public Command getAutonomousCommand() {
