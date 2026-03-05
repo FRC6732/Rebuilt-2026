@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.subsystems;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class SwerveSubsystem extends SubsystemBase {
     public SwerveDrive swerveDrive;
 
     public SwerveSubsystem() {
-        double maximumSpeed = Units.feetToMeters(4.5);
+        double maximumSpeed = Units.feetToMeters(1.5);
         File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
         try {
             swerveDrive = new SwerveParser(swerveJsonDirectory).createSwerveDrive(maximumSpeed);
@@ -66,7 +66,8 @@ public class SwerveSubsystem extends SubsystemBase {
             swerveDrive.drive(new Translation2d(translationX.getAsDouble() * swerveDrive.getMaximumChassisVelocity(),
                     translationY.getAsDouble() * swerveDrive.getMaximumChassisVelocity()),
                     angularRotationX.getAsDouble() * swerveDrive.getMaximumChassisAngularVelocity(),
-                    true,
+                    // true,
+                    false,
                     false);
         });
     }
